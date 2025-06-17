@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  # 存在 SSRF 漏洞的 Web 应用
+  web:
+    build: ./web
+    ports:
+      - "8000:5000"  # 将容器的 5000 端口映射到主机的 8000 端口
+    # 它和 redis 在同一个网络中，可以通过服务名 'redis' 访问
+    networks:
+      - app-net
+
+  # 内部 Redis 服务，不暴露端口到主机
+  redis:
+    image: "redis:6-alpine"
+    networks:
+      - app-net
+
+networks:
+  app-net:

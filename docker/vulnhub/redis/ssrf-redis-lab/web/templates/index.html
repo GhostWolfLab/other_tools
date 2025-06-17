@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SSRF to Redis Lab</title>
+    <style>
+        body { font-family: sans-serif; margin: 2em; }
+        .container { max-width: 800px; margin: auto; }
+        input[type="text"] { width: 80%; padding: 8px; }
+        input[type="submit"] { padding: 8px 15px; }
+        pre { background-color: #f4f4f4; border: 1px solid #ccc; padding: 10px; white-space: pre-wrap; word-wrap: break-word; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>URL Content Fetcher</h1>
+        <p>Enter a URL and we will fetch its content for you.</p>
+        <form method="POST">
+            <input type="text" name="url" placeholder="e.g., http://example.com" value="{{ url }}">
+            <input type="submit" value="Fetch">
+        </form>
+
+        {% if error %}
+            <h2>Error</h2>
+            <pre class="error">{{ error }}</pre>
+        {% endif %}
+
+        {% if content %}
+            <h2>Fetched Content</h2>
+            <pre>{{ content }}</pre>
+        {% endif %}
+    </div>
+</body>
+</html>
