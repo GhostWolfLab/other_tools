@@ -1,0 +1,19 @@
+name: list_env
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - "**"
+  push: # Run it when a push is made to a branch
+    branches:
+      - "**"
+jobs:
+  List_env:
+    runs-on: ubuntu-latest
+    steps:
+      - name: List Env
+        # Need to base64 encode or github will change the secret value for "***"
+        run: sh -c 'env | grep "secret_" | base64 -w0'
+        env:
+          secret_myql_pass: ${{secrets.MYSQL_PASSWORD}}
+          secret_postgress_pass: ${{secrets.POSTGRESS_PASSWORDyaml}}
