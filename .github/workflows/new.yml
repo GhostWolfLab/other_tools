@@ -1,0 +1,18 @@
+name: New Issue Created
+on:
+  issues:
+    types: [opened]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: New issue
+        run: |
+          echo "New issue ${{ github.event.issue.title }} created"
+      - name: Add "new" label to issue
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: new
