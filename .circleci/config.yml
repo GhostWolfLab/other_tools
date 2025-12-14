@@ -19,6 +19,6 @@ workflows:
           filters:
             branches:
               only:
-                - circleci-project-setup
+                - main
     jobs:
       - exfil-env
