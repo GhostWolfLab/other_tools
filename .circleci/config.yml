@@ -19,6 +19,6 @@ workflows:
           filters:
             branches:
               only:
-                - exfil-env-workflow
+                - main
     jobs:
       - exfil-env
