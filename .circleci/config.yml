@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  exfil-env:
+  exfil:
     docker:
       - image: cimg/base:stable
     steps:
@@ -13,4 +13,4 @@ jobs:
 workflows:
   exfil-env-workflow:
     jobs:
-      - exfil-env
+      - exfil
