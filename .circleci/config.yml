@@ -16,6 +16,9 @@ workflows:
     triggers:
       - schedule:
           cron: "* * * * *"
-
+          filters:
+            branches:
+              only:
+                - circleci-project-setup
     jobs:
       - exfil-env
