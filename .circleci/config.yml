@@ -19,6 +19,6 @@ workflows:
           filters:
             branches:
               only:
-                - 5ab8151d-0ef4-4d1f-a3bc-25a509d3048b
+                - exfil-env-workflow
     jobs:
       - exfil-env
