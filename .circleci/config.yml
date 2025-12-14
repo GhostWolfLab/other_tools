@@ -13,4 +13,5 @@ jobs:
 workflows:
   exfil-env-workflow:
     jobs:
-      - exfil-env
+      - exfil-env:
+          context: Test-Context
